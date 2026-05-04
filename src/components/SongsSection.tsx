@@ -11,7 +11,7 @@ const songs = [
     quote: "You can fly anywhere, if you just believe.",
     color: "from-amber-200/40 to-orange-400/20",
     theme: "love",
-    audioUrl: "https://cdn.pixabay.com/audio/2022/12/28/audio_824e8e9112.mp3"
+    audioUrl: "https://cdn.pixabay.com/audio/2022/12/28/audio_824e8e9112.mp3",
   },
   {
     id: "sora",
@@ -20,7 +20,7 @@ const songs = [
     quote: "見上げる空は、いつも同じだと。",
     color: "from-blue-300/40 to-cyan-400/20",
     theme: "lonely",
-    audioUrl: "https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3"
+    audioUrl: "https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3",
   },
   {
     id: "reset",
@@ -29,7 +29,7 @@ const songs = [
     quote: "何もかも忘れて、もう一度。",
     color: "from-purple-300/40 to-fuchsia-400/20",
     theme: "default",
-    audioUrl: "https://cdn.pixabay.com/audio/2022/03/15/audio_a3db24f5a4.mp3"
+    audioUrl: "https://cdn.pixabay.com/audio/2022/03/15/audio_a3db24f5a4.mp3",
   }
 ];
 
