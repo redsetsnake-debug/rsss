@@ -9,7 +9,6 @@ import SongsSection from "./components/SongsSection";
 import AboutSection from "./components/AboutSection";
 import VisualArchiveSection from "./components/VisualArchiveSection";
 import GallerySection from "./components/GallerySection";
-import BGMPlayer from "./components/BGMPlayer";
 import RippleEffect from "./components/RippleEffect";
 
 export default function App() {
@@ -18,7 +17,6 @@ export default function App() {
   return (
     <div className="relative min-h-screen font-sans selection:bg-purple-200/50">
       <BackgroundFlow mood={theme} />
-      <BGMPlayer />
       <RippleEffect />
       
       {/* Navigation / Header */}
