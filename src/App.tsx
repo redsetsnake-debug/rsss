@@ -10,14 +10,16 @@ import AboutSection from "./components/AboutSection";
 import VisualArchiveSection from "./components/VisualArchiveSection";
 import GallerySection from "./components/GallerySection";
 import BGMPlayer from "./components/BGMPlayer";
+import RippleEffect from "./components/RippleEffect";
 
 export default function App() {
-  const [theme, setTheme] = useState<"default" | "night" | "rain" | "lonely" | "love" | "courage">("default");
+  const [theme, setTheme] = useState<"default" | "night" | "rain" | "lonely" | "love" | "courage" | "chill">("default");
 
   return (
     <div className="relative min-h-screen font-sans selection:bg-purple-200/50">
       <BackgroundFlow mood={theme} />
       <BGMPlayer />
+      <RippleEffect />
       
       {/* Navigation / Header */}
       <header className="fixed top-0 inset-x-0 px-8 py-8 md:px-12 flex justify-between items-center z-50">

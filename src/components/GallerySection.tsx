@@ -8,23 +8,25 @@ const photos = [
     id: "performance-1",
     type: "Documentary / 演绎纪实",
     title: "Taichi Mukai",
-    // 提示：你刚上传的图片已在应用资源里，如果需要显示刚刚的图，请在左侧的文件资源管理器中创建一个 public 文件夹，并将它上传到那个文件夹并命名为 taichi-izakaya.jpg
-    image: "/taichi-izakaya.jpg",
+    // 提示：此处引用了你刚才发出的照片，需要正常显示，请将图片上传到侧边栏公共资源文件夹 (public/) 中，并命名为 向井太一-14.jpg
+    image: "/向井太一-14.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=600&auto=format&fit=crop", // An izakaya vibe fallback
-    classes: "md:col-span-2 md:row-span-2 aspect-[4/5] md:aspect-auto bg-slate-800",
+    classes: "md:col-span-2 md:row-span-2 aspect-[4/5] md:aspect-auto",
   },
   {
     id: "performance-2",
     type: "Live Tour / 巡演舞台",
     title: "PURE TOUR (2018)",
-    image: "https://images.unsplash.com/photo-1540039155732-d674d40a4c8a?q=80&w=600&auto=format&fit=crop",
+    // 提示：此处引用了你刚才发出的照片，需要正常显示，请将图片上传到侧边栏公共资源文件夹 (public/) 中，并命名为 向井太一-12.jpg
+    image: "/向井太一-12.jpg",
     classes: "aspect-square",
   },
   {
     id: "performance-3",
     type: "Acoustic Live / 音乐现场",
     title: "Billboard Live",
-    image: "/向井太一-3.jpg",
+    // 提示：此处引用了你发出的最新照片，需要正常显示，请将图片上传到左边侧边栏公共资源文件夹 (public/) 中，并命名为 向井太一-10.jpg
+    image: "/向井太一-10.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=600&auto=format&fit=crop",
     classes: "aspect-square",
   },
@@ -40,14 +42,16 @@ const photos = [
     id: "performance-5",
     type: "Festival / 音乐节现场",
     title: "SUMMER SONIC",
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop",
+    // 提示：此处引用了你刚才发出的照片，需要正常显示，请将图片上传到侧边栏公共资源文件夹 (public/) 中，并命名为 向井太一-11.jpg
+    image: "/向井太一-11.jpg",
     classes: "aspect-square",
   },
   {
     id: "performance-6",
     type: "Live Photo / 演艺高光",
     title: "COLORLESS TOUR (2021)",
-    image: "https://images.unsplash.com/photo-1510915361894-faa8b2d07584?q=80&w=600&auto=format&fit=crop",
+    // 提示：此处引用了你刚才发出的照片，需要正常显示，请将图片上传到左边侧边栏公共资源文件夹 (public/) 中，并命名为 向井太一-15.jpg
+    image: "/向井太一-15.jpg",
     classes: "aspect-square",
   },
 ];
@@ -75,7 +79,7 @@ export default function GallerySection() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: i * 0.1 }}
-            className={cn("group relative rounded-2xl overflow-hidden shadow-sm bg-slate-200 border border-white/60", item.classes)}
+            className={cn("group relative rounded-2xl overflow-hidden shadow-sm bg-transparent border border-white/60", item.classes)}
           >
             {/* Image Background */}
             <div 
@@ -95,12 +99,12 @@ export default function GallerySection() {
             </div>
             
             {/* Dark/Gradient Overlay */}
-            <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/40 transition-colors duration-500" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-700" />
+            <div className="absolute inset-0 bg-transparent group-hover:bg-black/20 transition-colors duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             
             {/* Content */}
-            <div className="absolute bottom-0 left-0 p-6 opacity-90 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-500">
-              <span className="text-xs font-mono tracking-widest uppercase text-white/70 mb-2 block">{item.type}</span>
+            <div className="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-4 transition-all duration-500">
+              <span className="text-xs font-mono tracking-widest uppercase text-white/90 mb-2 block drop-shadow-md">{item.type}</span>
               <h3 className="text-xl md:text-2xl font-medium tracking-wide text-white drop-shadow-md">{item.title}</h3>
             </div>
             

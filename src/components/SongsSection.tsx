@@ -12,7 +12,7 @@ const songs = [
     color: "from-amber-200/40 to-orange-400/20",
     theme: "courage",
     // 提示：此处暂时使用测试无版权音乐，如果需要替换为《HERO》的真实音频，可以把mp3文件放在public/目录下并使用相对路径，如 "/hero.mp3"
-    audioUrl: "https://cdn.pixabay.com/audio/2022/12/28/audio_824e8e9112.mp3",
+    audioUrl: "http://q2.vtoa.cc:8080/audio/download?time=1778497293981",
     // 提示：此处引用了你刚才发出的照片，如果需要正常显示，请将该图片上传到侧边栏公共资源文件夹 (public/) 中，并命名为 向井太一-7.jpg
     imageUrl: "/向井太一-7.jpg",
   },
@@ -22,7 +22,7 @@ const songs = [
     emotion: "轻松 / 随性 (Relaxed / Chill)",
     quote: "ただの友達でいよう",
     color: "from-blue-300/40 to-cyan-400/20",
-    theme: "lonely",
+    theme: "chill",
     audioUrl: "https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3",
     imageUrl: "/向井太一-8.jpg",
   },
