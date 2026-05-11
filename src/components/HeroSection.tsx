@@ -1,12 +1,24 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 
-export default function HeroSection() {
+export default function HeroSection({ mood = "default" }: { mood?: string }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
+
+  const moodColorMap: Record<string, string> = {
+    default: "text-purple-700",
+    night: "text-indigo-800",
+    rain: "text-blue-700",
+    lonely: "text-slate-600",
+    love: "text-pink-600",
+    courage: "text-amber-700",
+    chill: "text-cyan-700",
+  };
+
+  const currentTextColor = moodColorMap[mood] || moodColorMap.default;
 
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
@@ -26,10 +38,22 @@ export default function HeroSection() {
           className="col-span-12 md:col-span-7 pb-12"
         >
           <div className="mb-6 opacity-60 text-xs uppercase tracking-[0.5em] text-slate-500">正在聆听 / Now Breathing</div>
-          <h1 className="text-4xl md:text-6xl font-light leading-tight mb-8 font-serif text-slate-800">
-            漂う夜に、<br className="md:hidden" />
-            <span className="italic text-5xl md:text-7xl md:ml-8 opacity-90 block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600">
-              君の声だけが残る。
+          <h1 className={`text-4xl md:text-6xl font-light leading-tight mb-8 font-serif transition-colors duration-1000 ${currentTextColor}`}>
+            <span className="inline-block transition-all hover:blur-none">漂</span>
+            <span className="inline-block blur-[0.5px] opacity-90 mx-[1px]">う</span>
+            <span className="inline-block">夜</span>
+            <span className="inline-block blur-[0.5px] opacity-90 mx-[1px]">に</span>
+            <span className="inline-block">、</span>
+            <br className="md:hidden" />
+            <span className="italic text-5xl md:text-7xl md:ml-8 block mt-2">
+              <span className="inline-block">君</span>
+              <span className="inline-block blur-[1px] opacity-80 mx-[1px]">の</span>
+              <span className="inline-block">声</span>
+              <span className="inline-block blur-[0.5px] mx-[1px]">だ</span>
+              <span className="inline-block">け</span>
+              <span className="inline-block">が</span>
+              <span className="inline-block blur-[1.5px] opacity-70 mx-[1px]">残</span>
+              <span className="inline-block">る。</span>
             </span>
           </h1>
           <div className="flex items-center space-x-4 pt-4">

@@ -11,8 +11,8 @@ const songs = [
     quote: "誰かのために強くなれる (I can be strong for someone else)",
     color: "from-amber-200/40 to-orange-400/20",
     theme: "courage",
-    // 提示：此处暂时使用测试无版权音乐，如果需要替换为《HERO》的真实音频，可以把mp3文件放在public/目录下并使用相对路径，如 "/hero.mp3"
-    audioUrl: "http://q2.vtoa.cc:8080/audio/download?time=1778497293981",
+    // 提示：已替换为你在 /public 下上传的真实音频
+    audioUrl: "/hero.mp3",
     // 提示：此处引用了你刚才发出的照片，如果需要正常显示，请将该图片上传到侧边栏公共资源文件夹 (public/) 中，并命名为 向井太一-7.jpg
     imageUrl: "/向井太一-7.jpg",
   },
@@ -23,7 +23,8 @@ const songs = [
     quote: "ただの友達でいよう",
     color: "from-blue-300/40 to-cyan-400/20",
     theme: "chill",
-    audioUrl: "https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3",
+    // 提示：已替换为你上传的音频 "只是朋友.mp3"
+    audioUrl: "/只是朋友.mp3",
     imageUrl: "/向井太一-8.jpg",
   },
   {
@@ -33,7 +34,8 @@ const songs = [
     quote: "何もかも忘れて、もう一度。",
     color: "from-purple-300/40 to-fuchsia-400/20",
     theme: "default",
-    audioUrl: "https://cdn.pixabay.com/audio/2022/03/15/audio_a3db24f5a4.mp3",
+    // 提示：已替换为你上传的音频 "重置.mp3"
+    audioUrl: "/重置.mp3",
     // 替换为正方形的这张照片
     imageUrl: "/向井太一-6.jpg",
   }

@@ -36,7 +36,7 @@ export default function App() {
       </header>
 
       <main className="relative z-10 flex-1">
-        <div id="home"><HeroSection /></div>
+        <div id="home"><HeroSection mood={theme} /></div>
         <div className="h-24" /> {/* Spacing */}
         <div id="songs"><SongsSection onThemeChange={setTheme} /></div>
         <div id="about"><AboutSection /></div>
