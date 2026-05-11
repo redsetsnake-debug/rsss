@@ -6,33 +6,38 @@ import { useState, useRef, useEffect } from "react";
 const tracks = [
   { 
     id: "preview-1", 
-    title: "FLY - Short Preview", 
-    duration: "1:30",
-    audioUrl: "https://cdn.pixabay.com/audio/2022/10/18/audio_165e31d36d.mp3", 
+    title: "FLY", 
+    duration: "YouTube",
+    youtubeUrl: "https://www.youtube.com/watch?v=O5p6MQarj50&list=RDO5p6MQarj50&start_radio=1", 
+    audioUrl: "", 
   },
   { 
     id: "preview-2", 
-    title: "Siren - Short Preview", 
-    duration: "1:45",
-    audioUrl: "https://cdn.pixabay.com/audio/2023/02/28/audio_550d815fa5.mp3", 
+    title: "道", 
+    duration: "YouTube",
+    youtubeUrl: "https://www.youtube.com/watch?v=sGx2zKTxWQA&list=RDEMKZYTVF4AoALznhlpi_3Yyg&index=13",
+    audioUrl: "", 
   },
   { 
     id: "preview-3", 
-    title: "PURE - Short Preview", 
-    duration: "2:00",
-    audioUrl: "https://cdn.pixabay.com/audio/2022/01/21/audio_31743c58bc.mp3", 
+    title: "PURE", 
+    duration: "YouTube",
+    youtubeUrl: "https://www.youtube.com/watch?v=4bgVPXvGLrI&list=RD4bgVPXvGLrI&start_radio=1",
+    audioUrl: "", 
   },
   { 
     id: "preview-4", 
-    title: "Slow Down - Short Preview", 
-    duration: "1:15",
-    audioUrl: "https://cdn.pixabay.com/audio/2022/11/22/audio_febc508520.mp3", 
+    title: "Slow Down", 
+    duration: "YouTube",
+    youtubeUrl: "https://www.youtube.com/watch?v=LnZIcYU6BoI&list=RDLnZIcYU6BoI&start_radio=1",
+    audioUrl: "", 
   },
   { 
     id: "preview-5", 
-    title: "SAVAGE - Short Preview", 
-    duration: "1:50",
-    audioUrl: "https://cdn.pixabay.com/audio/2021/09/06/audio_cf68a35639.mp3", 
+    title: "SAVAGE", 
+    duration: "YouTube",
+    youtubeUrl: "https://www.youtube.com/watch?v=fSIxzsz3KkI&list=RDfSIxzsz3KkI&start_radio=1",
+    audioUrl: "", 
   },
 ];
 
@@ -52,6 +57,11 @@ function TrackRow({ track, index }: { track: typeof tracks[0], index: number }) 
   }, [track.id, isPlaying]);
 
   const togglePlay = () => {
+    if (track.youtubeUrl) {
+      window.open(track.youtubeUrl, "_blank");
+      return;
+    }
+
     if (isPlaying) {
       audioRef.current?.pause();
       setIsPlaying(false);
@@ -61,9 +71,19 @@ function TrackRow({ track, index }: { track: typeof tracks[0], index: number }) 
       
       if (audioRef.current) {
         audioRef.current.volume = 0.5;
-        audioRef.current.play();
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log("Audio playback failed:", error);
+            setIsPlaying(false);
+          });
+        }
+      } else {
+        setIsPlaying(true);
       }
-      setIsPlaying(true);
+      if (audioRef.current && !audioRef.current.error) {
+        setIsPlaying(true);
+      }
     }
   };
 
@@ -105,7 +125,7 @@ function TrackRow({ track, index }: { track: typeof tracks[0], index: number }) 
       <div className="text-sm font-mono text-slate-400">
         {track.duration}
       </div>
-      <audio ref={audioRef} src={track.audioUrl} onEnded={() => setIsPlaying(false)} />
+      {track.audioUrl && <audio ref={audioRef} src={track.audioUrl} onEnded={() => setIsPlaying(false)} onError={(e) => { e.currentTarget.removeAttribute("src"); setIsPlaying(false); }} />}
     </motion.div>
   );
 }

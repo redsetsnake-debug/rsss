@@ -42,7 +42,13 @@ export default function BGMPlayer() {
         // 播放BGM时，暂停其他歌曲
         window.dispatchEvent(new CustomEvent("pause-all-songs", { detail: { except: "bgm" } }));
         audioRef.current.volume = 0.2;
-        audioRef.current.play();
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log("BGM playback failed", error);
+            setIsPlaying(false);
+          });
+        }
       }
       setIsPlaying(!isPlaying);
     }
@@ -71,8 +77,11 @@ export default function BGMPlayer() {
       </motion.button>
       <audio
         ref={audioRef}
-        src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3"
+        // 当你需要播放自己的 MP3 文件时，请将 MP3 文件上传到左侧的 public 文件夹，
+        // 然后将这里的 src 替换为你的文件名（如 "/my-bgm.mp3"）
+        src="/taichi-bgm.mp3"
         loop
+        onError={(e) => { e.currentTarget.removeAttribute("src"); setIsPlaying(false); }}
       />
     </div>
   );

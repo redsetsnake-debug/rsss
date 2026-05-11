@@ -5,22 +5,26 @@ import { cn } from "../lib/utils";
 
 const songs = [
   {
-    id: "fly",
-    title: "FLY",
-    emotion: "漂浮 / 温暖 (Floating / Warm)",
-    quote: "You can fly anywhere, if you just believe.",
+    id: "hero",
+    title: "HERO",
+    emotion: "坚定 / 力量 (Resolute / Powerful)",
+    quote: "誰かのために強くなれる (I can be strong for someone else)",
     color: "from-amber-200/40 to-orange-400/20",
-    theme: "love",
+    theme: "courage",
+    // 提示：此处暂时使用测试无版权音乐，如果需要替换为《HERO》的真实音频，可以把mp3文件放在public/目录下并使用相对路径，如 "/hero.mp3"
     audioUrl: "https://cdn.pixabay.com/audio/2022/12/28/audio_824e8e9112.mp3",
+    // 提示：此处引用了你刚才发出的照片，如果需要正常显示，请将该图片上传到侧边栏公共资源文件夹 (public/) 中，并命名为 向井太一-7.jpg
+    imageUrl: "/向井太一-7.jpg",
   },
   {
-    id: "sora",
-    title: "空",
-    emotion: "孤独 / 清透 (Lonely / Airy)",
-    quote: "見上げる空は、いつも同じだと。",
+    id: "just-friends",
+    title: "Just Friends",
+    emotion: "轻松 / 随性 (Relaxed / Chill)",
+    quote: "ただの友達でいよう",
     color: "from-blue-300/40 to-cyan-400/20",
     theme: "lonely",
     audioUrl: "https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3",
+    imageUrl: "/向井太一-8.jpg",
   },
   {
     id: "reset",
@@ -30,6 +34,8 @@ const songs = [
     color: "from-purple-300/40 to-fuchsia-400/20",
     theme: "default",
     audioUrl: "https://cdn.pixabay.com/audio/2022/03/15/audio_a3db24f5a4.mp3",
+    // 替换为正方形的这张照片
+    imageUrl: "/向井太一-6.jpg",
   }
 ];
 
@@ -79,9 +85,19 @@ function SongCard({ song, index, onThemeChange }: { song: any, index: number, on
       
       if (audioRef.current) {
         audioRef.current.volume = 0.5;
-        audioRef.current.play();
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log("Audio playback failed:", error);
+            setIsPlaying(false);
+          });
+        }
+      } else {
+        setIsPlaying(true);
       }
-      setIsPlaying(true);
+      if (audioRef.current && !audioRef.current.error) {
+         setIsPlaying(true);
+      }
       onThemeChange(song.theme);
     }
   };
@@ -93,8 +109,28 @@ function SongCard({ song, index, onThemeChange }: { song: any, index: number, on
       className="w-full flex justify-center px-12 min-h-[50vh] md:min-h-[70vh] items-center"
     >
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center w-full max-w-7xl">
-        <div className="col-span-12 md:col-span-7">
-          {/* We spread out the section a bit to have breathing room */}
+        <div className="col-span-12 md:col-span-7 flex justify-center md:items-center p-6 md:p-0">
+          <div className="relative w-full max-w-sm md:max-w-md aspect-square rounded-3xl overflow-hidden shadow-lg border border-white/40">
+            <motion.div 
+              className="w-full h-full bg-cover bg-center origin-center"
+              style={{ backgroundImage: `url(${song.imageUrl})` }}
+              animate={{ scale: isPlaying ? 1.05 : 1 }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
+            />
+            <div className={cn("absolute inset-0 transition-opacity duration-1000", isPlaying ? "bg-black/0" : "bg-black/0")} />
+            
+            {/* Audio equalizer animation that shows only when playing */}
+            {isPlaying && (
+              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6 pb-8 z-10">
+                <div className="flex gap-[4px] items-end h-6 opacity-80">
+                  <motion.span animate={{ height: [8, 16, 8] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-[3px] bg-white block rounded-full" />
+                  <motion.span animate={{ height: [12, 24, 12] }} transition={{ repeat: Infinity, duration: 1.0 }} className="w-[3px] bg-white block rounded-full" />
+                  <motion.span animate={{ height: [6, 14, 6] }} transition={{ repeat: Infinity, duration: 0.9 }} className="w-[3px] bg-white block rounded-full" />
+                  <motion.span animate={{ height: [10, 20, 10] }} transition={{ repeat: Infinity, duration: 1.1 }} className="w-[3px] bg-white block rounded-full" />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         <div className="col-span-12 md:col-span-5 flex flex-col items-end w-full">
           <div className={cn("bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl p-8 w-full md:w-[380px] shadow-[0_8px_32px_rgba(0,0,0,0.05)] relative overflow-hidden group transition-all duration-700", isPlaying ? "scale-[1.02] shadow-[0_12px_45px_rgba(0,0,0,0.1)] border-white/80" : "")}>
@@ -155,7 +191,7 @@ function SongCard({ song, index, onThemeChange }: { song: any, index: number, on
           </div>
         </div>
       </div>
-      <audio ref={audioRef} src={song.audioUrl} loop />
+      <audio ref={audioRef} src={song.audioUrl} loop onError={(e) => { e.currentTarget.removeAttribute("src"); setIsPlaying(false); }} />
     </motion.div>
   );
 }

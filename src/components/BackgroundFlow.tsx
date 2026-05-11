@@ -1,9 +1,9 @@
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { cn } from "../lib/utils";
 
 interface BackgroundFlowProps {
-  mood?: "default" | "night" | "rain" | "lonely" | "love";
+  mood?: "default" | "night" | "rain" | "lonely" | "love" | "courage";
 }
 
 const moodColors = {
@@ -12,6 +12,7 @@ const moodColors = {
   rain: ["bg-sky-300/80", "bg-cyan-200/90", "bg-blue-300/70"],
   lonely: ["bg-stone-300/80", "bg-zinc-300/80", "bg-slate-300/80"],
   love: ["bg-rose-300/80", "bg-pink-300/80", "bg-fuchsia-300/70"],
+  courage: ["bg-orange-300/80", "bg-amber-300/70", "bg-yellow-300/80"],
 };
 
 export default function BackgroundFlow({ mood = "default" }: BackgroundFlowProps) {
@@ -21,10 +22,78 @@ export default function BackgroundFlow({ mood = "default" }: BackgroundFlowProps
     setColors(moodColors[mood]);
   }, [mood]);
 
+  const petals = useMemo(() => {
+    // Generate an array of random petals
+    return Array.from({ length: 30 }).map((_, i) => ({
+      id: i,
+      left: `${(Math.random() * 120) - 10}%`, // Start horizontally with some overflow
+      animDuration: `${12 + Math.random() * 18}s`,
+      animDelay: `-${Math.random() * 25}s`,
+      rotDuration: `${4 + Math.random() * 8}s`,
+      scale: 0.6 + Math.random() * 0.8,
+      sway: (Math.random() - 0.5) * 160,
+      swayDuration: 4 + Math.random() * 5
+    }));
+  }, []);
+
   return (
     <div className="fixed inset-0 -z-50 overflow-hidden bg-[#F4F6FB]">
+      <style>{`
+        @keyframes sakura-fall {
+          0% {
+            transform: translateY(-10vh);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(110vh);
+            opacity: 0;
+          }
+        }
+        @keyframes sakura-rotate {
+          0% {
+            transform: rotate(0deg) rotateX(0deg) rotateY(0deg) scale(var(--sakura-scale));
+          }
+          100% {
+            transform: rotate(360deg) rotateX(360deg) rotateY(180deg) scale(var(--sakura-scale));
+          }
+        }
+      `}</style>
+      
+      {/* 樱花飘落层 - Sakura falling effect */}
+      {petals.map(petal => (
+        <div 
+          key={petal.id}
+          className="absolute -top-10 pointer-events-none z-10"
+          style={{
+            left: petal.left,
+            animation: `sakura-fall ${petal.animDuration} linear ${petal.animDelay} infinite`,
+          }}
+        >
+          <motion.div
+             animate={{ x: [0, petal.sway, 0] }}
+             transition={{ duration: petal.swayDuration, repeat: Infinity, ease: "easeInOut" }}
+          >
+            {/* 樱花花瓣形状 */}
+            <div 
+              className="w-3 h-4 bg-gradient-to-br from-pink-200/70 to-pink-300/40 rounded-tl-[60%] rounded-br-[60%] rounded-tr-[5%] rounded-bl-[5%] shadow-[0_0_8px_rgba(251,207,232,0.4)] backdrop-blur-[1px]"
+              style={{
+                animation: `sakura-rotate ${petal.rotDuration} linear ${petal.animDelay} infinite`,
+                "--sakura-scale": petal.scale,
+              } as React.CSSProperties}
+            />
+          </motion.div>
+        </div>
+      ))}
+
+      {/* 气泡背景层 */}
       <motion.div
-        className={cn("absolute -top-[20%] -left-[10%] w-[600px] h-[600px] rounded-full blur-[120px] mix-blend-multiply opacity-60", colors[0])}
+        className={cn("absolute -top-[20%] -left-[10%] w-[600px] h-[600px] rounded-full blur-[120px] mix-blend-multiply opacity-60 transition-colors duration-1000", colors[0])}
         animate={{
           x: [0, 50, 0, -50, 0],
           y: [0, 30, -30, 50, 0],
@@ -33,7 +102,7 @@ export default function BackgroundFlow({ mood = "default" }: BackgroundFlowProps
         transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className={cn("absolute -bottom-[10%] -right-[5%] w-[500px] h-[500px] rounded-full blur-[100px] mix-blend-multiply opacity-60", colors[1])}
+        className={cn("absolute -bottom-[10%] -right-[5%] w-[500px] h-[500px] rounded-full blur-[100px] mix-blend-multiply opacity-60 transition-colors duration-1000", colors[1])}
         animate={{
           x: [0, -60, 0, 40, 0],
           y: [0, -40, 60, -20, 0],
@@ -42,7 +111,7 @@ export default function BackgroundFlow({ mood = "default" }: BackgroundFlowProps
         transition={{ duration: 28, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
       <motion.div
-        className={cn("absolute top-[40%] left-[30%] w-[300px] h-[300px] rounded-full blur-[80px] mix-blend-multiply opacity-50", colors[2])}
+        className={cn("absolute top-[40%] left-[30%] w-[300px] h-[300px] rounded-full blur-[80px] mix-blend-multiply opacity-50 transition-colors duration-1000", colors[2])}
         animate={{
           x: [0, 40, -30, 0, 0],
           y: [0, -50, 40, -30, 0],

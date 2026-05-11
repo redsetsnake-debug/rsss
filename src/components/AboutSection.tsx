@@ -27,6 +27,16 @@ export default function AboutSection() {
         <h2 className="text-3xl md:text-4xl font-light tracking-widest text-slate-800 uppercase">
           个人特质 / Identity
         </h2>
+
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true, margin: "-100px" }}
+           transition={{ duration: 0.8 }}
+           className="text-slate-600 leading-relaxed font-light text-sm md:text-base max-w-2xl mx-auto tracking-wide text-justify"
+        >
+          向井太一 (Mukai Taichi) 是一位来自日本福冈县的创作型实力男歌手。他以独特的 R&B、Neo Soul 风格和通透柔软的嗓音闻名，其音乐作品常常探讨城市中的孤独、爱与希望。他不仅在音乐领域展现出卓越的才华，还在时尚领域保持着敏锐的触觉，散发着清爽、干练且充满艺术感的独特魅力。
+        </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
           {items.map((item, i) => (

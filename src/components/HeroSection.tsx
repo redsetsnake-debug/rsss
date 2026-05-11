@@ -33,29 +33,35 @@ export default function HeroSection() {
             </span>
           </h1>
           <div className="flex items-center space-x-4 pt-4">
-            <div className="h-[1px] w-24 bg-slate-400"></div>
             <span className="text-sm tracking-widest text-slate-500 italic">漂流的夜里，唯有你的声音萦绕不散。</span>
           </div>
         </motion.div>
         
-        {/* Placeholder element for the Right side in smaller/larger displays if we want */}
-        <div className="col-span-12 md:col-span-5 flex flex-col items-end">
-        </div>
+        {/* Photo Section */}
+        <motion.div 
+          className="col-span-12 md:col-span-5 flex flex-col items-center md:items-end w-full pb-12 z-10"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.5, ease: "easeOut", delay: 0.6 }}
+        >
+          <div className="relative w-64 h-80 md:w-80 md:h-[420px] rounded-[2rem] p-3 bg-white/40 border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.05)] rotate-3 hover:rotate-0 transition-transform duration-700">
+            {/* Background Glow */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-purple-200/40 to-blue-200/40 rounded-[2rem] -z-10 blur-xl" />
+            
+            <div 
+              className="w-full h-full rounded-[1.5rem] bg-cover bg-center overflow-hidden relative shadow-inner"
+              style={{ backgroundImage: `url('/向井太一-5.jpg')`, imageRendering: 'high-quality' }}
+            >
+            </div>
+            
+            {/* Decorative colored blobs */}
+            <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-purple-300/40 rounded-full blur-2xl -z-10 pointer-events-none"></div>
+            <div className="absolute -top-6 -right-6 w-32 h-32 bg-cyan-300/40 rounded-full blur-2xl -z-10 pointer-events-none"></div>
+          </div>
+        </motion.div>
       </div>
       
-      <motion.div 
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-      >
-        <span className="text-[10px] tracking-widest text-slate-400 uppercase">向下滚动 / Scroll</span>
-        <motion.div 
-          className="w-[1px] h-12 bg-gradient-to-b from-slate-400 to-transparent"
-          animate={{ height: ["0px", "48px"], opacity: [0, 1, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.div>
+
     </motion.section>
   );
 }
